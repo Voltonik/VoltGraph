@@ -1,0 +1,13 @@
+{
+  "name": "dev.markasaad.volt.graph",
+  "displayName": "Volt Graph",
+  "version": "1.0.0",
+  "unity": "2021.3",
+  "description": "A reusable base graph editor framework for Unity, providing node-based graph editing tools. with save and load functionality.",
+  "author": {
+    "name": "Mark Asaad",
+    "email": "markasaadramzy@gmail.com"
+  },
+  "hideInEditor": false,
+  "keywords": ["graph", "editor", "node"]
+}

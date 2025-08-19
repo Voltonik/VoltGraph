@@ -1,0 +1,47 @@
+.node__main-container {
+    background-color: #1D1D1E;
+}
+
+.node__extension-container {
+    background-color: #1D1D1E;
+    padding: 8px;
+}
+
+.node__custom-data-container {
+    background-color: #212325;
+    border-radius: 4px;
+    padding: 8px;
+    margin: 4px;
+}
+
+.node__custom-grid {
+    flex-direction: row;
+}
+
+.unity-base-text-field__input {
+    background-color: #1D1D1E;
+    border-color: #27292C;
+    border-radius: 4px;
+    min-width: 50px;
+    padding: 5px;
+}
+
+.unity-base-text-field__label {
+    align-self: center;
+}
+
+.node__button {
+    background-color: #252729;
+    border-color: #1D1D1E;
+    max-height: 25px;
+    margin: 4px;
+}
+
+.node__button:hover {
+    background-color: #2B2D2F;
+}
+
+.node__button:active {
+    background-color: #212325;
+    color: #FABD2F;
+}
