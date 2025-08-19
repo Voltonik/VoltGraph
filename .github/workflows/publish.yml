@@ -1,32 +1,44 @@
 name: "publish npm"
 
-on: push
+on:
+  push:
+
+permissions:
+  contents: write
 
 jobs:
-    publish:
-        runs-on: ubuntu-latest
-        steps:
-            - name: checkout
-              uses: actions/checkout@v2
-              
-            - name: node
-              uses: actions/setup-node@v2
-              with:
-                  node-version: 12
-                  registry-url: https://registry.npmjs.org
-                  
-            - name: version patch 
-              run: npm version patch
-              working-directory: Packages/dev.markasaad.volt.graph
-                  
-            - run: git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-            - run: git config user.name "$GITHUB_ACTOR"
-            - run: git add Packages/dev.markasaad.volt.graph/package.json
-            - run: git commit -m "[skip actions]"
-            - run: git push "https://$GITHUB_ACTOR:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git"
-            
-            - name: publish
-              run: npm publish --access public
-              working-directory: Packages/dev.markasaad.volt.graph
-              env:
-                  NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLISH_TOKEN}}
+  publish:
+    if: ${{ github.actor != 'github-actions[bot]' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 12
+          registry-url: https://registry.npmjs.org
+
+      - name: version patch
+        run: npm version patch
+        working-directory: Packages/dev.markasaad.volt.graph
+
+      - name: Commit version bump (if any)
+        run: |
+          git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git config user.name "${GITHUB_ACTOR}"
+          git add Packages/dev.markasaad.volt.graph/package.json
+          git commit -m "[skip actions] chore: version bump from CI" || echo "No changes to commit"
+
+      - name: Push bump
+        run: git push
+
+      - name: publish
+        run: npm publish --access public
+        working-directory: Packages/dev.markasaad.volt.graph
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
